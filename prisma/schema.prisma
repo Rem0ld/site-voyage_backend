@@ -10,13 +10,104 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  email         String         @unique
+  username      String
+  country       String?
+  zip           String?
+  city          String?
+  role          Role           @default(USER)
+  notifications Notification[]
+  userTravel    UserTravel[]
+  review        Review[]
+}
+
+model Notification {
+  id                   Int      @id @default(autoincrement())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  dateSendNotification DateTime
+  userId               Int
+  user                 User     @relation(fields: userId, references: id)
+}
+
+model UserTravel {
+  userId        Int
+  user          User     @relation(fields: userId, references: id)
+  travelId      Int
+  travel        Travel   @relation(fields: travelId, references: id)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  departureDate DateTime
+
+  @@id([userId, travelId])
+}
+
+model Travel {
+  id            Int          @id @default(autoincrement())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  toCountry     String
+  fromCountry   String
+  departureDate DateTime
+  returnDate    DateTime
+  userTravel    UserTravel[]
+}
+
+model Picture {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  email     String   @unique
-  username  String
-  country   String?
-  zip       String?
-  city      String?
+  countryId Int
+  country   Country  @relation(fields: countryId, references: numericCode)
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comment   String   @db.VarChar(255)
+  score     Int?     @db.SmallInt
+  userId    Int
+  user      User     @relation(fields: userId, references: id)
+  countryId Int
+  country   Country  @relation(fields: countryId, references: numericCode)
+}
+
+model Country {
+  numericCode    Int       @id
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  picture        Picture[]
+  review         Review[]
+  name           String
+  topLevelDomain String[]
+  alpha2Code     String?
+  alpha3Code     String?
+  callingCodes   String[]
+  altSpellings   String[]
+  region         String?
+  subregion      String?
+  population     Int?
+  latlng         Int[]
+  demonym        String?
+  area           String?
+  gini           Int?
+  timezones      String[]
+  borders        String[]
+  nativeName     String?
+  currencies     String[]
+  languages      String[]
+  translations   String[]
+  flag           String?
+  regionalBlocks String[]
+  cioc           String?
 }
