@@ -36,6 +36,24 @@ export const createUser = async (user: User): Promise<User> => {
 }
 
 /**
+ * Updates a user in DB
+ * @param user User
+ * @returns the newly created user
+ */
+export const updateUser = async (user: User): Promise<User> => {
+  return await prisma.user.update({
+    where: {
+      id: +user.id
+    },
+    data: {
+      country: user.country,
+      city: user.city,
+      zip: user.zip
+    },
+  }).catch((error) => { throw error })
+}
+
+/**
  * Deletes a user
  * @param id 
  */
@@ -121,6 +139,17 @@ export const createTravel = async (oneTravel: Travel): Promise<Travel | Error> =
   return await prisma.travel.create({
     data: {
       ...oneTravel
+    }
+  })
+}
+
+export const updateTravelDone = async (travel: Travel): Promise<Travel> => {
+  return await prisma.travel.update({
+    where: {
+      id: travel.id
+    },
+    data: {
+      done: true
     }
   })
 }
