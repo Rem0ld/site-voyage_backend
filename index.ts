@@ -29,7 +29,7 @@ export const getOneUser = async (user: User): Promise<User | null> => {
  * @param user User
  * @returns the newly created user
  */
-export const createUser = async (user: User): Promise<User | Error> => {
+export const createUser = async (user: User): Promise<User> => {
   return await prisma.user.create({
     data: { ...user },
   }).catch((error) => { throw error })
@@ -245,7 +245,7 @@ export const getOneCountry = async (id: number): Promise<Country | null> => {
  * @param country
  * @returns the newly created country
  */
-export const createCountry = async (country: any): Promise<Country | Error> => {
+export const createCountry = async (country: any): Promise<Country> => {
   return await prisma.country.create({
     data: {
       ...country

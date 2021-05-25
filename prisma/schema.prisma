@@ -75,6 +75,8 @@ model Review {
   user      User?    @relation(fields: userId, references: id)
   countryId Int
   country   Country  @relation(fields: countryId, references: id)
+
+  @@index([userId], name: "user_id")
 }
 
 model Country {

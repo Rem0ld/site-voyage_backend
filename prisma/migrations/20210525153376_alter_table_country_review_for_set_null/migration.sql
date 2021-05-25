@@ -1,0 +1,3 @@
+-- AddForeignKey
+ALTER TABLE "Review" DROP CONSTRAINT "Review_userId_fkey";
+ALTER TABLE "Review" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
