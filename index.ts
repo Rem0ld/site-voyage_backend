@@ -16,10 +16,10 @@ export const getAllUser = async (): Promise<User[]> => {
  * @param id number
  * @returns 
  */
-export const getOneUser = async (user: User): Promise<User | null> => {
+export const getOneUser = async (email: string): Promise<User | null> => {
   return await prisma.user.findFirst({
     where: {
-      id: user.id
+      email: email
     }
   });
 }
@@ -118,12 +118,12 @@ export const deleteNotification = async (notification: Notification): Promise<vo
 
 /* ------------ CRUD TRAVEL ------------ */
 
-export const getAllTravel = async (): Promise<User[]> => {
-  return await prisma.user.findMany();
+export const getAllTravel = async (): Promise<Travel[]> => {
+  return await prisma.travel.findMany();
 }
 
-export const getOneTravel = async (id: number): Promise<User | null> => {
-  return await prisma.user.findFirst({
+export const getOneTravel = async (id: number): Promise<Travel | null> => {
+  return await prisma.travel.findFirst({
     where: {
       id: id
     }
@@ -135,18 +135,18 @@ export const getOneTravel = async (id: number): Promise<User | null> => {
  * @param oneTravel
  * @returns the newly created travel
  */
-export const createTravel = async (oneTravel: Travel): Promise<Travel | Error> => {
+export const createTravel = async (oneTravel: any): Promise<Travel | Error> => {
   return await prisma.travel.create({
     data: {
-      ...oneTravel
+      ...oneTravel,
     }
   })
 }
 
-export const updateTravelDone = async (travel: Travel): Promise<Travel> => {
+export const updateTravelDone = async (id: number): Promise<Travel> => {
   return await prisma.travel.update({
     where: {
-      id: travel.id
+      id: id
     },
     data: {
       done: true
