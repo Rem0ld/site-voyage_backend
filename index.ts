@@ -122,6 +122,16 @@ export const getAllTravel = async (): Promise<Travel[]> => {
   return await prisma.travel.findMany();
 }
 
+export const getAllTravelUser = async (email: string): Promise<Travel[]> => {
+  return await prisma.travel.findMany({
+    where: {
+      user: {
+        email: email
+      }
+    }
+  });
+}
+
 export const getOneTravel = async (id: number): Promise<Travel | null> => {
   return await prisma.travel.findFirst({
     where: {

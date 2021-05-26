@@ -5,6 +5,7 @@ import {
   createTravel,
   deleteTravel,
   getAllTravel,
+  getAllTravelUser,
   getOneTravel,
   updateTravelDone,
 } from "../../index";
@@ -12,6 +13,11 @@ const router = express.Router();
 
 router.get("/all", (req, res) => {
   getAllTravel().then((travels) => res.send(travels));
+});
+
+router.post("/all", (req, res) => {
+  const email: string = req.body.email;
+  getAllTravelUser(email).then((travels) => res.send(travels));
 });
 
 router.post("/one", (req, res) => {
@@ -22,8 +28,6 @@ router.post("/one", (req, res) => {
 router.post("/new", (req, res) => {
   // Needs validation with joi here
   const newTravel: Travel = req.body;
-
-  console.log(newTravel);
 
   const schemaUser: ObjectSchema<AnySchema> = joi.object({
     destination: joi.string().required(),
