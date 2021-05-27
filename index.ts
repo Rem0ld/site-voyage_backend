@@ -173,7 +173,7 @@ export const deleteTravel = async (id: number): Promise<void | Error> => {
     where: {
       id: id
     }
-  }).catch((error) => { throw error })
+  })
 }
 
 /* ------------ CRUD PICTURE ------------ */

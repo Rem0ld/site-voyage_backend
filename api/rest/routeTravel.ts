@@ -25,33 +25,32 @@ router.post("/one", (req, res) => {
   getOneTravel(id).then((travel) => res.send(travel));
 });
 
-router.post("/new", (req, res) => {
+router.post("/new", (req, res, next) => {
   // Needs validation with joi here
   const newTravel: Travel = req.body;
 
   const schemaUser: ObjectSchema<AnySchema> = joi.object({
-    destination: joi.string().required(),
+    destination: joi.string().required().trim(),
     userId: joi.number().required(),
-    fromCountry: joi.string().allow(""),
+    fromCountry: joi.string().allow("").trim(),
     departureDate: joi.date().allow(""),
     returnDate: joi.date().allow(""),
   });
 
   const { error } = schemaUser.validate(newTravel);
   if (error) {
-    res.send(error?.details);
-    return;
+    return next(error.details);
   }
 
   createTravel(newTravel)
     .then((result) => {
-      console.log(result);
-      res.send(result);
+      console.log("Travel created", result);
+      res.status(200)
+      return res.send(result);
     })
     .catch((error) => {
-      res.status(400);
-      res.send("error");
-      console.error(error);
+      res.status(500);
+      return res.send(error);
     });
 });
 
@@ -60,29 +59,28 @@ router.post("/delete", (req, res) => {
 
   deleteTravel(id)
     .then(() => {
-      res.send("Ok");
+      res.status(200)
+      return res.send("Ok");
     })
     .catch((error) => {
-      // check status code
-      res.status(400);
-      res.send("error");
-      console.error(error);
+      res.status(500);
+      console.error("Error delete travel", error);
+      return res.send("error");
     });
 });
 
 router.post("/update-done", (req, res) => {
   const id: number = req.body.id;
 
-
   updateTravelDone(id)
-    .then((result) => {
-      res.send(result);
+    .then(() => {
+      res.status(200)
+      return res.send("Ok");
     })
     .catch((error) => {
-      // check status code
-      res.status(400);
-      res.send("error");
-      console.error(error);
+      res.status(500);
+      console.error("Error update travel", error)
+      return res.send("error");
     });
 });
 
