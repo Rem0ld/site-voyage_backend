@@ -33,8 +33,8 @@ router.post("/new", (req, res, next) => {
     destination: joi.string().required().trim(),
     userId: joi.number().required(),
     fromCountry: joi.string().allow("").trim(),
-    departureDate: joi.date().allow(""),
-    returnDate: joi.date().allow(""),
+    departureDate: joi.date().allow(null),
+    returnDate: joi.date().allow(null),
   });
 
   const { error } = schemaUser.validate(newTravel);
@@ -46,11 +46,17 @@ router.post("/new", (req, res, next) => {
     .then((result) => {
       console.log("Travel created", result);
       res.status(200)
-      return res.send(result);
+      return res.json({
+        type: "valid",
+        body: result
+      });
     })
     .catch((error) => {
-      res.status(500);
-      return res.send(error);
+      console.log(error)
+      return res.status(500).json({
+        type: "error",
+        error: error
+      });
     });
 });
 
@@ -60,12 +66,17 @@ router.post("/delete", (req, res) => {
   deleteTravel(id)
     .then(() => {
       res.status(200)
-      return res.send("Ok");
+      return res.json({
+        type: "valid",
+      });
     })
     .catch((error) => {
       res.status(500);
       console.error("Error delete travel", error);
-      return res.send("error");
+      return res.json({
+        type: "error",
+        error: error
+      });
     });
 });
 
