@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import cors from "cors";
 import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel"
@@ -17,6 +17,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", user)
 app.use("/travel", travel)
+
+
+app.use((err: Error, _req: any, res: { send: (arg0: string) => void; }, _next: NextFunction) => {
+  console.error("error message", err)
+
+  if (err.message) {
+    res.send(err.message)
+  } else {
+    res.send('Something broke!')
+  }
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

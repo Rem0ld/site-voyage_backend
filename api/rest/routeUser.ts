@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import express from "express";
 import joi, { ObjectSchema, AnySchema } from "joi";
 import {
@@ -9,6 +9,7 @@ import {
   getOneUser,
   disconnect,
 } from "../../index";
+const prisma = new PrismaClient()
 const router = express.Router();
 
 router.get("/all", (req, res) => {
@@ -22,53 +23,50 @@ router.post("/one", (req, res) => {
   disconnect()
 });
 
-router.post("/new", (req, res) => {
+router.post("/new", (req, res, next) => {
   // Needs validation with joi here
   const newUser: User = req.body;
 
   const schemaUser: ObjectSchema<AnySchema> = joi.object({
-    username: joi.string().alphanum().min(3).max(30).required(),
-    email: joi.string().email(),
-    city: joi.string().allow(""),
-    zip: joi.string().max(5).allow(""),
+    username: joi.string().alphanum().min(3).max(30).required().trim(),
+    email: joi.string().email().trim(),
+    city: joi.string().allow("").trim(),
+    zip: joi.string().max(5).allow("").trim(),
   });
 
   const { error } = schemaUser.validate(newUser);
   if (error) {
-    res.send(error?.details);
+    console.log("error validation");
+    next(error)
   }
 
-  createUser(newUser)
-    .then((result) => {
-      console.log(result);
-      res.send(result);
-    })
-    .catch((error) => {
-      res.status(400);
-      res.send("error");
-      console.error(error);
-    });
-  disconnect()
+
+  createUser(newUser).then((result) => {
+    res.status(200);
+    console.log("User created")
+    return res.json(result);
+  }).catch((error) => {
+    return res.json(error)
+  })
 });
 
-router.post("/delete", (req, res) => {
-  // Needs validation with joi here
-  const userId = req.body;
+router.post("/delete", (req, res, next) => {
+  const { email } = req.body;
 
-  deleteUser(userId)
+  deleteUser(email)
     .then(() => {
-      res.send("Ok");
+      res.status(200);
+      console.log("User deleted")
+      return res.send("Ok");
     })
     .catch((error) => {
-      // check status code
-      res.status(400);
-      res.send("error");
-      console.error(error);
+      console.error(error)
+      res.status(404);
+      return res.json(error)
     });
-  disconnect()
 });
 
-router.post("/update-address", (req, res) => {
+router.post("/update-address", (req, res, next) => {
   const user: User = req.body;
 
   const schemaUser: ObjectSchema<AnySchema> = joi.object({
@@ -80,20 +78,19 @@ router.post("/update-address", (req, res) => {
 
   const { error } = schemaUser.validate(user);
   if (error) {
-    res.send(error.details);
+    res.status(500);
+    next(error)
   }
 
   updateUser(user)
     .then((result) => {
-      res.send(result);
+      console.log("User updated", result)
+      return res.json(result);
     })
     .catch((error) => {
-      // check status code
-      res.status(400);
-      res.send("error");
-      console.error(error);
+      res.status(404);
+      return res.json(error)
     });
-  disconnect()
 });
 
 export default router;

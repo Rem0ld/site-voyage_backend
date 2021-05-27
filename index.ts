@@ -29,10 +29,10 @@ export const getOneUser = async (email: string): Promise<User | null> => {
  * @param user User
  * @returns the newly created user
  */
-export const createUser = async (user: User): Promise<User> => {
+export const createUser = async (user: User): Promise<User | Error> => {
   return await prisma.user.create({
     data: { ...user },
-  }).catch((error) => { throw error })
+  })
 }
 
 /**
@@ -50,26 +50,26 @@ export const updateUser = async (user: User): Promise<User> => {
       city: user.city,
       zip: user.zip
     },
-  }).catch((error) => { throw error })
+  })
 }
 
 /**
  * Deletes a user
- * @param id 
+ * @param email 
  */
-export const deleteUser = async (user: User): Promise<void | Error> => {
+export const deleteUser = async (email: string): Promise<void | Error> => {
   await prisma.user.delete({
     where: {
-      id: user.id
+      email: email
     }
-  }).catch((error) => { throw error })
+  })
 }
 
 /**
  * Deletes All User 
  */
 export const deleteAllUser = async (): Promise<void | Error> => {
-  await prisma.user.deleteMany().catch((error) => { throw error })
+  await prisma.user.deleteMany()
 }
 
 /* ------------ CRUD NOTIFICATION ------------ */
