@@ -97,7 +97,7 @@ model Country {
   region         String?
   subregion      String?
   population     Int?
-  latlng         Int[]
+  latlng         Float[]
   demonym        String?
   area           Float?
   gini           Float?
