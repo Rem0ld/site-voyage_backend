@@ -46,6 +46,7 @@ model Travel {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   destination   String
+  country       Country   @relation(fields: destination, references: name)
   fromCountry   String?
   departureDate DateTime?
   returnDate    DateTime?
@@ -86,7 +87,8 @@ model Country {
   updatedAt      DateTime  @updatedAt
   picture        Picture[]
   review         Review[]
-  name           String
+  travel         Travel[]
+  name           String    @unique
   capital        String?
   topLevelDomain String[]
   alpha2Code     String?
@@ -98,8 +100,8 @@ model Country {
   population     Int?
   latlng         Int[]
   demonym        String?
-  area           String?
-  gini           Int?
+  area           Float?
+  gini           Float?
   timezones      String[]
   borders        String[]
   nativeName     String?
@@ -107,6 +109,6 @@ model Country {
   languages      Json[]
   translations   Json[]
   flag           String?
-  regionalBlocks Json[]
+  regionalBlocs  Json[]
   cioc           String?
 }
