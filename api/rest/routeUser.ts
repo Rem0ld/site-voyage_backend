@@ -10,18 +10,22 @@ import {
   disconnect,
 } from "../../index";
 const router = express.Router();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const authMiddleware = require("../../firebase/auth-middleware");
 
-router.get("/all", (req, res) => {
-  getAllUser().then((users) => res.send(users));
-  disconnect();
-});
-
+/**
+ * Gets one user from email
+ */
 router.post("/one", (req, res) => {
   const email = req.body.email;
   getOneUser(email).then((user) => res.json(user));
   disconnect();
 });
 
+
+/**
+ * Create a user
+ */
 router.post("/new", (req, res, next) => {
   // Needs validation with joi here
   const newUser: User = req.body;
@@ -56,6 +60,17 @@ router.post("/new", (req, res, next) => {
     });
 });
 
+// We protect those routes
+router.use("/", authMiddleware);
+
+router.get("/all", (req, res) => {
+  getAllUser().then((users) => res.send(users));
+  disconnect();
+});
+
+/**
+ * Deletes a user
+ */
 router.post("/delete", (req, res) => {
   const { email } = req.body;
 
@@ -76,6 +91,10 @@ router.post("/delete", (req, res) => {
     });
 });
 
+
+/**
+ * Updates address of a user
+ */
 router.post("/update-address", (req, res, next) => {
   const user: User = req.body;
 

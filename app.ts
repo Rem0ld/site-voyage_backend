@@ -4,7 +4,6 @@ import express, { NextFunction } from "express";
 import cors from "cors";
 import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel";
-import Joi from "joi";
 
 const app = express();
 const port = 3000;

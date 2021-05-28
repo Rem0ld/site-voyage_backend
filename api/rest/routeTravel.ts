@@ -10,6 +10,10 @@ import {
   updateTravelDone,
 } from "../../index";
 const router = express.Router();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const authMiddleware = require("../../firebase/auth-middleware");
+
+router.use("/", authMiddleware);
 
 router.get("/all", (req, res) => {
   getAllTravel().then((travels) => res.send(travels));
