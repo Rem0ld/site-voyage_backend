@@ -56,7 +56,7 @@ router.post("/new", (req, res, next) => {
     });
 });
 
-router.post("/delete", (req, res, next) => {
+router.post("/delete", (req, res) => {
   const { email } = req.body;
 
   deleteUser(email)

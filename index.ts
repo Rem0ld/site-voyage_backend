@@ -20,6 +20,9 @@ export const getOneUser = async (email: string): Promise<User | null> => {
   return await prisma.user.findFirst({
     where: {
       email: email
+    },
+    include: {
+      notifications: true
     }
   });
 }
