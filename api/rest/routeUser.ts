@@ -96,7 +96,8 @@ router.post("/delete", (req, res) => {
  * Updates address of a user
  */
 router.post("/update-address", (req, res, next) => {
-  const user: User = req.body;
+  const { user } = req.body;
+  console.log(user);
 
   const schemaUser: ObjectSchema<AnySchema> = joi.object({
     id: joi.number(),

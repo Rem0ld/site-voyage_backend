@@ -8,7 +8,11 @@ const prisma = new PrismaClient()
  * Returns all user in DB 
  */
 export const getAllUser = async (): Promise<User[]> => {
-  return await prisma.user.findMany();
+  return await prisma.user.findMany({
+    include: {
+      notifications: true
+    }
+  });
 }
 
 /**
@@ -35,6 +39,9 @@ export const getOneUser = async (email: string): Promise<User | null> => {
 export const createUser = async (user: User): Promise<User | Error> => {
   return await prisma.user.create({
     data: { ...user },
+    include: {
+      notifications: true
+    }
   })
 }
 
@@ -53,6 +60,9 @@ export const updateUser = async (user: User): Promise<User> => {
       city: user.city,
       zip: user.zip
     },
+    include: {
+      notifications: true
+    }
   })
 }
 
