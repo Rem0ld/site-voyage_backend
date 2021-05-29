@@ -4,6 +4,7 @@ import express, { NextFunction } from "express";
 import cors from "cors";
 import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel";
+import country from "./api/rest/routeCountry";
 
 const app = express();
 const port = 3000;
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", user);
 app.use("/travel", travel);
+app.use("/country", country);
 
 app.use(
   (
