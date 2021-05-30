@@ -226,9 +226,19 @@ async function main() {
               countryId: 2
             },
             {
+              comment: "Choqui",
+              score: 1,
+              countryId: 2
+            },
+            {
+              comment: "trop ienb",
+              score: 5,
+              countryId: 2
+            },
+            {
               comment: "Magnifique",
-              score: 4,
-              countryId: 1
+              score: 3,
+              countryId: 2
             }
           ]
         }

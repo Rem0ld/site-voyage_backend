@@ -6,6 +6,7 @@ import {
   deleteCountry,
   getAllCountry,
   getOneCountry,
+  getOneCountryPerName,
 } from "../../index";
 const router = express.Router();
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -17,8 +18,17 @@ router.get("/all", (req, res) => {
 
 router.post("/one", (req, res) => {
   const numericCode = req.body.numericCode;
-  console.log("getting this country", numericCode)
+
   getOneCountry(numericCode).then((country) => {
+    console.log(country)
+    res.send(country)
+  });
+});
+
+router.post("/one-name", (req, res) => {
+  const name = req.body.name;
+
+  getOneCountryPerName(name).then((country) => {
     console.log(country)
     res.send(country)
   });

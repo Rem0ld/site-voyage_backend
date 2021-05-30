@@ -307,6 +307,22 @@ export const getOneCountry = async (numericCode: string): Promise<Country | null
   });
 }
 
+export const getOneCountryPerName = async (name: string): Promise<Country | null> => {
+  return await prisma.country.findFirst({
+    where: {
+      name: name
+    },
+    include: {
+      review: {
+        include: {
+          user: true
+        },
+      },
+      picture: true
+    }
+  });
+}
+
 /**
  * Will create a Country
  * @param country
