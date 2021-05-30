@@ -297,7 +297,11 @@ export const getOneCountry = async (numericCode: string): Promise<Country | null
       numericCode: numericCode
     },
     include: {
-      review: true,
+      review: {
+        include: {
+          user: true
+        },
+      },
       picture: true
     }
   });

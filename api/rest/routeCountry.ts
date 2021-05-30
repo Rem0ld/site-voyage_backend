@@ -17,7 +17,11 @@ router.get("/all", (req, res) => {
 
 router.post("/one", (req, res) => {
   const numericCode = req.body.numericCode;
-  getOneCountry(numericCode).then((country) => res.send(country));
+  console.log("getting this country", numericCode)
+  getOneCountry(numericCode).then((country) => {
+    console.log(country)
+    res.send(country)
+  });
 });
 
 router.post("/new", (req, res, next) => {
