@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Country" ALTER COLUMN "latlng" SET DATA TYPE DOUBLE PRECISION[];
