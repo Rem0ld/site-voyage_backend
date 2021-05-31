@@ -46,17 +46,17 @@ model Travel {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   destination   String
+  country       Country   @relation(fields: destination, references: name)
   fromCountry   String?
   departureDate DateTime?
   returnDate    DateTime?
-  userId        Int
+  userId        Int?
   user          User?     @relation(fields: [userId], references: id)
   done          Boolean   @default(false)
 }
 
 model Picture {
   id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    Int
   user      User?    @relation(fields: userId, references: id)
@@ -86,7 +86,8 @@ model Country {
   updatedAt      DateTime  @updatedAt
   picture        Picture[]
   review         Review[]
-  name           String
+  travel         Travel[]
+  name           String    @unique
   capital        String?
   topLevelDomain String[]
   alpha2Code     String?
@@ -96,10 +97,10 @@ model Country {
   region         String?
   subregion      String?
   population     Int?
-  latlng         Int[]
+  latlng         Float[]
   demonym        String?
-  area           String?
-  gini           Int?
+  area           Float?
+  gini           Float?
   timezones      String[]
   borders        String[]
   nativeName     String?
@@ -107,6 +108,6 @@ model Country {
   languages      Json[]
   translations   Json[]
   flag           String?
-  regionalBlocks Json[]
+  regionalBlocs  Json[]
   cioc           String?
 }

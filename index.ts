@@ -237,6 +237,13 @@ export const deletePicture = async (picture: Picture): Promise<void | Error> => 
 
 /* ------------ CRUD REVIEW ------------ */
 
+/**
+ * Gets all reviews for a country
+ * may be not revelant as we will get the country with
+ * all reviews, pictures etc...
+ * @param country 
+ * @returns 
+ */
 export const getAllReviewPerCountry = async (country: Country): Promise<Review[]> => {
   return await prisma.review.findMany({
     where: {
@@ -284,10 +291,34 @@ export const getAllCountry = async (): Promise<Country[]> => {
   return await prisma.country.findMany();
 }
 
-export const getOneCountry = async (id: number): Promise<Country | null> => {
+export const getOneCountry = async (numericCode: string): Promise<Country | null> => {
   return await prisma.country.findFirst({
     where: {
-      id: id
+      numericCode: numericCode
+    },
+    include: {
+      review: {
+        include: {
+          user: true
+        },
+      },
+      picture: true
+    }
+  });
+}
+
+export const getOneCountryPerName = async (name: string): Promise<Country | null> => {
+  return await prisma.country.findFirst({
+    where: {
+      name: name
+    },
+    include: {
+      review: {
+        include: {
+          user: true
+        },
+      },
+      picture: true
     }
   });
 }
