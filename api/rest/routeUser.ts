@@ -10,7 +10,6 @@ import {
   disconnect,
 } from "../../index";
 const router = express.Router();
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const authMiddleware = require("../../firebase/auth-middleware");
 
 /**

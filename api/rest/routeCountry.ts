@@ -37,7 +37,7 @@ router.post("/one-name", (req, res) => {
 router.post("/new", (req, res, next) => {
   // Needs validation with joi here
   const newCountry: Country = req.body;
-
+  console.log("in the router country", newCountry)
   // const schemaUser: ObjectSchema<AnySchema> = joi.object({
   //   destination: joi.string().required().trim(),
   //   userId: joi.number().required(),
@@ -53,12 +53,14 @@ router.post("/new", (req, res, next) => {
 
   createCountry(newCountry)
     .then((result) => {
-      console.log("Country created", result);
-      res.status(200)
-      return res.json({
-        type: "valid",
-        body: result
-      });
+      if (result) {
+        console.log("Country created", result);
+        res.status(200)
+        return res.json({
+          type: "valid",
+          body: result
+        });
+      }
     })
     .catch((error) => {
       console.log("country couldn't be created", error)

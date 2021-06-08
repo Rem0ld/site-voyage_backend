@@ -328,12 +328,18 @@ export const getOneCountryPerName = async (name: string): Promise<Country | null
  * @param country
  * @returns the newly created country
  */
-export const createCountry = async (country: any): Promise<Country> => {
-  return await prisma.country.create({
-    data: {
-      ...country
-    }
-  })
+export const createCountry = async (country: any): Promise<Country | undefined> => {
+  // TODO: we have to check if already exist in the DB and return if so
+  if (country.numericCode)
+    return await prisma.country.upsert({
+      where: {
+        numericCode: country.numericCode
+      },
+      update: {},
+      create: {
+        ...country
+      }
+    })
 }
 
 /**

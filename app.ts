@@ -5,6 +5,7 @@ import cors from "cors";
 import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel";
 import country from "./api/rest/routeCountry";
+import helmet from "helmet";
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,7 @@ const corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
