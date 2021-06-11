@@ -31,7 +31,7 @@ app.use(
     _next: NextFunction
   ) => {
 
-    console.log(err)
+    console.error(err)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     if (err[0].message) {

@@ -37,7 +37,7 @@ router.post("/one-name", (req, res) => {
 router.post("/new", (req, res, next) => {
   // Needs validation with joi here
   const newCountry: Country = req.body;
-  console.log("in the router country", newCountry)
+
   // const schemaUser: ObjectSchema<AnySchema> = joi.object({
   //   destination: joi.string().required().trim(),
   //   userId: joi.number().required(),

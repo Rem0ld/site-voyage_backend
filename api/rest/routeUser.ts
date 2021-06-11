@@ -7,9 +7,9 @@ import {
   deleteUser,
   updateUser,
   getOneUser,
-  disconnect,
 } from "../../index";
 const router = express.Router();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const authMiddleware = require("../../firebase/auth-middleware");
 
 /**
@@ -18,7 +18,6 @@ const authMiddleware = require("../../firebase/auth-middleware");
 router.post("/one", (req, res) => {
   const email = req.body.email;
   getOneUser(email).then((user) => res.json(user));
-  disconnect();
 });
 
 
@@ -64,7 +63,6 @@ router.use("/", authMiddleware);
 
 router.get("/all", (req, res) => {
   getAllUser().then((users) => res.send(users));
-  disconnect();
 });
 
 /**
