@@ -65,15 +65,15 @@ model Picture {
 }
 
 model Review {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  comment   String   @db.VarChar(255)
-  score     Int?     @db.SmallInt
-  userId    Int?
-  user      User?    @relation(fields: userId, references: id)
-  countryId Int
-  country   Country  @relation(fields: countryId, references: id)
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  comment     String   @db.VarChar(255)
+  score       Int?     @db.SmallInt
+  userId      Int?
+  user        User?    @relation(fields: userId, references: id)
+  countryName String
+  country     Country  @relation(fields: countryName, references: name)
 
   @@index([userId], name: "user_id")
 }

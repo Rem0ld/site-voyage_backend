@@ -180,13 +180,6 @@ async function main() {
           ]
         }
       },
-      review: {
-        create: {
-          comment: "C T tro bi1!",
-          score: 5,
-          countryId: 3
-        }
-      }
     },
   });
 
@@ -223,22 +216,22 @@ async function main() {
             {
               comment: "Peu de beau paysage",
               score: 2,
-              countryId: 2
+              countryName: "Albania"
             },
             {
               comment: "Choqui",
               score: 1,
-              countryId: 2
+              countryName: "Albania"
             },
             {
               comment: "trop ienb",
               score: 5,
-              countryId: 2
+              countryName: "Albania"
             },
             {
               comment: "Magnifique",
               score: 3,
-              countryId: 2
+              countryName: "Albania"
             }
           ]
         }
