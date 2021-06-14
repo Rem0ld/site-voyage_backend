@@ -6,6 +6,9 @@ import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel";
 import country from "./api/rest/routeCountry";
 import helmet from "helmet";
+import multer from 'multer';
+const upload = multer({ dest: 'uploads/' })
+
 
 const app = express();
 const port = 3000;

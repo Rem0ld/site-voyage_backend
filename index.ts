@@ -210,15 +210,16 @@ export const getOnePicture = async (id: number): Promise<Picture | null> => {
 /**
  * Will create a picture
  * @param url country
- * @returns the newly created picture
+ * @returns the created entry
  */
 export const createPicture =
-  async (url: string, country: Country, user: User): Promise<Picture | Error> => {
+  async (url: string, country: Country, user: User, description: string): Promise<Picture> => {
     return await prisma.picture.create({
       data: {
         userId: user.id,
         countryId: country.id,
-        url: url
+        url: url,
+        description: description
       }
     })
   }
