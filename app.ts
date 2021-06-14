@@ -5,9 +5,10 @@ import cors from "cors";
 import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel";
 import country from "./api/rest/routeCountry";
+import review from "./api/rest/routeReview";
 import helmet from "helmet";
 import multer from 'multer';
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'public/images' })
 
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", user);
+app.use("/review", review);
 app.use("/travel", travel);
 app.use("/country", country);
 

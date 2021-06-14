@@ -248,7 +248,7 @@ export const deletePicture = async (picture: Picture): Promise<void | Error> => 
 export const getAllReviewPerCountry = async (country: Country): Promise<Review[]> => {
   return await prisma.review.findMany({
     where: {
-      countryId: country.id
+      countryName: country.name
     }
   });
 }
@@ -266,7 +266,7 @@ export const getOneReview = async (id: number): Promise<Review | null> => {
  * @param review
  * @returns the newly created review
  */
-export const createReview = async (review: Review): Promise<Review | Error> => {
+export const createReview = async (review: Review): Promise<Review> => {
   return await prisma.review.create({
     data: {
       ...review
@@ -330,7 +330,6 @@ export const getOneCountryPerName = async (name: string): Promise<Country | null
  * @returns the newly created country
  */
 export const createCountry = async (country: any): Promise<Country | undefined> => {
-  // TODO: we have to check if already exist in the DB and return if so
   if (country.numericCode)
     return await prisma.country.upsert({
       where: {
