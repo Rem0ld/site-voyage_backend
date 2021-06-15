@@ -4,8 +4,11 @@ import express, { NextFunction } from "express";
 import cors from "cors";
 import user from "./api/rest/routeUser";
 import travel from "./api/rest/routeTravel";
+import picture from "./api/rest/routePicture";
 import country from "./api/rest/routeCountry";
 import helmet from "helmet";
+import multer from "multer";
+const upload = multer({ dest: 'public/images' })
 
 const app = express();
 const port = 3000;
@@ -22,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", user);
 app.use("/travel", travel);
 app.use("/country", country);
+app.use("/picture", picture)
 
 app.use(
   (
@@ -40,7 +44,7 @@ app.use(
       return res.json({ "error": err[0].message });
 
     } else {
-      return res.send("Something broke")
+      return res.send(err.message)
     }
   }
 );

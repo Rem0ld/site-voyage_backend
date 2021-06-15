@@ -120,3 +120,5 @@ test.ts
 
 # private firebase admin key
 /firebase/site-voyage-development-firebase-adminsdk.json
+
+/public/images
