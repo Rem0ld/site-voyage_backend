@@ -226,7 +226,7 @@ export const getOnePicture = async (id: number): Promise<Picture | null> => {
 /**
  * Will create a picture
  * @param url country
- * @returns the newly created picture
+ * @returns the created entry
  */
 export const createPicture = async (
   url: string,
@@ -294,7 +294,7 @@ export const getOneReview = async (id: number): Promise<Review | null> => {
  * @param review
  * @returns the newly created review
  */
-export const createReview = async (review: Review): Promise<Review | Error> => {
+export const createReview = async (review: Review): Promise<Review> => {
   return await prisma.review.create({
     data: {
       ...review,

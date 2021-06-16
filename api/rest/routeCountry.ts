@@ -51,24 +51,34 @@ router.post("/new", (req, res, next) => {
   //   return next(error.details);
   // }
 
-  createCountry(newCountry)
-    .then((result) => {
-      if (result) {
-        console.log("Country created", result);
-        res.status(200)
-        return res.json({
-          type: "valid",
-          body: result
-        });
-      }
+  getOneCountry(newCountry.numericCode).then(result => {
+    if (result) return res.status(409).json({
+      type: "error",
+      error: "Country already exists"
     })
-    .catch((error) => {
-      console.log("country couldn't be created", error)
-      return res.status(500).json({
-        type: "error",
-        error: error
+
+    createCountry(newCountry)
+      .then((result) => {
+        if (result) {
+          console.log("Country created", result);
+
+          return res.status(200).json({
+            type: "valid",
+            body: result
+          });
+        }
+      })
+      .catch((error) => {
+        throw error
       });
+  }).catch((error) => {
+    console.error("country couldn't be created", error)
+    return res.status(500).json({
+      type: "error",
+      error: error
     });
+  });
+
 });
 
 // router.post("/delete", (req, res) => {
