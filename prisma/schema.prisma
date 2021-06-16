@@ -35,7 +35,7 @@ model Notification {
   dateSendNotification DateTime
   userId               Int
   user                 User?    @relation(fields: userId, references: id)
-  travelId             Int
+  travelId             Int      @unique
 }
 
 model Travel {

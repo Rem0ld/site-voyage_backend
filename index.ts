@@ -132,12 +132,12 @@ export const createNotification = async (
  * @param id
  */
 export const deleteNotification = async (
-  notification: Notification
+  travelId: number
 ): Promise<void | Error> => {
   await prisma.notification
     .delete({
       where: {
-        id: notification.id,
+        travelId: travelId,
       },
     })
     .catch((error) => {

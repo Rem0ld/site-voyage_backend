@@ -7,6 +7,7 @@ import travel from "./api/rest/routeTravel";
 import picture from "./api/rest/routePicture";
 import country from "./api/rest/routeCountry";
 import review from "./api/rest/routeReview";
+import notification from "./api/rest/routeNotification";
 import helmet from "helmet";
 import multer from "multer";
 const upload = multer({ dest: 'public/images' })
@@ -27,7 +28,8 @@ app.use("/user", user);
 app.use("/review", review);
 app.use("/travel", travel);
 app.use("/country", country);
-app.use("/picture", picture)
+app.use("/picture", picture);
+app.use("/notification", notification);
 
 app.use(
   (
