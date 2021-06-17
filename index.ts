@@ -34,6 +34,7 @@ export const getOneUser = async (email: string): Promise<User | null> => {
     },
     include: {
       notifications: true,
+      travel: true
     },
   });
 };

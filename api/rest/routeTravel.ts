@@ -4,6 +4,7 @@ import joi, { ObjectSchema, AnySchema } from "joi";
 import {
   createNotification,
   createTravel,
+  deleteNotification,
   deleteTravel,
   getAllTravel,
   getAllTravelUser,
@@ -87,8 +88,8 @@ router.post("/delete", (req, res) => {
 
   deleteTravel(id)
     .then(() => {
-      res.status(200);
-      return res.json({
+      deleteNotification(id)
+      return res.status(200).json({
         type: "valid",
       });
     })
@@ -107,6 +108,7 @@ router.post("/update-done", (req, res) => {
 
   updateTravelDone(id)
     .then(() => {
+      deleteNotification(id)
       res.status(200);
       return res.send("Ok");
     })
