@@ -35,21 +35,13 @@ router.post("/one-name", (req, res) => {
 });
 
 router.post("/new", (req, res, next) => {
-  // Needs validation with joi here
+  if (req.body.review) {
+    delete req.body.review;
+  }
+  if (req.body.picture) {
+    delete req.body.picture;
+  }
   const newCountry: Country = req.body;
-
-  // const schemaUser: ObjectSchema<AnySchema> = joi.object({
-  //   destination: joi.string().required().trim(),
-  //   userId: joi.number().required(),
-  //   fromCountry: joi.string().allow("").trim(),
-  //   departureDate: joi.date().allow(null),
-  //   returnDate: joi.date().allow(null),
-  // });
-
-  // const { error } = schemaUser.validate(newTravel);
-  // if (error) {
-  //   return next(error.details);
-  // }
 
   getOneCountry(newCountry.numericCode).then(result => {
     if (result) return res.status(409).json({

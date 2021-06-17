@@ -118,8 +118,8 @@ export const getAllNotificationPerUser = async (
  * @returns the newly created travel
  */
 export const createNotification = async (
-  notification: Notification
-): Promise<Notification | Error> => {
+  notification: any
+): Promise<Notification> => {
   return await prisma.notification.create({
     data: {
       ...notification,
@@ -174,7 +174,7 @@ export const getOneTravel = async (id: number): Promise<Travel | null> => {
  * @param oneTravel
  * @returns the newly created travel
  */
-export const createTravel = async (oneTravel: any): Promise<Travel | Error> => {
+export const createTravel = async (oneTravel: any): Promise<Travel> => {
   return await prisma.travel.create({
     data: {
       ...oneTravel,
@@ -197,7 +197,7 @@ export const updateTravelDone = async (id: number): Promise<Travel> => {
  * Deletes a travel
  * @param id
  */
-export const deleteTravel = async (id: number): Promise<void | Error> => {
+export const deleteTravel = async (id: number): Promise<void> => {
   await prisma.travel.delete({
     where: {
       id: id,

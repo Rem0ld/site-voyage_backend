@@ -2,6 +2,7 @@ import { Travel } from "@prisma/client";
 import express from "express";
 import joi, { ObjectSchema, AnySchema } from "joi";
 import {
+  createNotification,
   createTravel,
   deleteTravel,
   getAllTravel,
@@ -49,17 +50,34 @@ router.post("/new", (req, res, next) => {
   createTravel(newTravel)
     .then((result) => {
       console.log("Travel created", result);
-      res.status(200)
-      return res.json({
+
+      if (result.departureDate) {
+        const aWeekBeforeDeparture = new Date(
+          result.departureDate.getTime() - 60 * 60 * 24 * 7 * 1000
+        );
+
+        const notification = {
+          travelId: result.id,
+          userId: result.userId,
+          dateSendNotification: aWeekBeforeDeparture,
+        };
+        createNotification(notification)
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => console.error(error));
+      }
+
+      return res.status(200).json({
         type: "valid",
-        body: result
+        body: result,
       });
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
         type: "error",
-        error: error
+        error: error,
       });
     });
 });
@@ -69,7 +87,7 @@ router.post("/delete", (req, res) => {
 
   deleteTravel(id)
     .then(() => {
-      res.status(200)
+      res.status(200);
       return res.json({
         type: "valid",
       });
@@ -79,7 +97,7 @@ router.post("/delete", (req, res) => {
       console.error("Error delete travel", error);
       return res.json({
         type: "error",
-        error: error
+        error: error,
       });
     });
 });
@@ -89,12 +107,12 @@ router.post("/update-done", (req, res) => {
 
   updateTravelDone(id)
     .then(() => {
-      res.status(200)
+      res.status(200);
       return res.send("Ok");
     })
     .catch((error) => {
       res.status(500);
-      console.error("Error update travel", error)
+      console.error("Error update travel", error);
       return res.send("error");
     });
 });
