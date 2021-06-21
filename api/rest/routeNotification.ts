@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  deleteNotification, getAllNotificationPerUser,
+  deleteNotification, getAllNotificationPerUser, updateNotifications,
 } from "../../index";
 const router = express.Router();
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -18,6 +18,17 @@ router.post("/all", (req, res) => {
     res.status(200).json({
       type: "valid",
       payload: notifications
+    })
+  })
+})
+
+router.put("/update", (req, res) => {
+  const user = req.body;
+
+  updateNotifications(user).then(() => {
+    res.status(200).json({
+      type: "valid",
+      payload: "Ok"
     })
   })
 })

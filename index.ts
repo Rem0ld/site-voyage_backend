@@ -106,13 +106,17 @@ export const getAllNotificationPerUser = async (
   });
 };
 
-// export const getOneNotification = async (id: number): Promise<User | null> => {
-//   return await prisma.user.findFirst({
-//     where: {
-//       id: id
-//     }
-//   });
-// }
+export const updateNotifications = async (user: User): Promise<void> => {
+  const update = await prisma.notification.updateMany({
+    where: {
+      userId: user.id
+    },
+    data: {
+      seen: true
+    }
+
+  });
+};
 
 /**
  * Will create a notification for a user
