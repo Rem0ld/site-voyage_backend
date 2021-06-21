@@ -36,6 +36,7 @@ model Notification {
   userId               Int
   user                 User?    @relation(fields: userId, references: id)
   travelId             Int      @unique
+  seen                 Boolean  @default(false)
 }
 
 model Travel {

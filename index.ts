@@ -101,6 +101,7 @@ export const getAllNotificationPerUser = async (
   return await prisma.notification.findMany({
     where: {
       userId: user.id,
+      seen: false
     },
   });
 };
